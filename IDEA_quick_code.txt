@@ -1,0 +1,24 @@
+存日志的目录
+
+上传文件的目录
+
+
+group1/M00/00/00/wKgAdl6n4xqAI6n6AAHrBtbYwE4280.jpg
+
+
+
+Alt + F7  查找当前这个方法被调用的地方
+Ctrl + Alt + B  快速定位当前方法的实现
+Shift + F6  重命名
+Ctrl + F 当前文件检索
+Ctrl + Shift + F 全文检索
+Ctrl + R 当前文件查找替换
+Ctrl + Shift + R 全文检索替换 
+Ctrl + Alt + L  格式化
+Ctrl + Alt + O 优化import导包
+Alt + insert 添加set、get、construct、override等方法
+Alt + Enter 导入包
+
+
+FactoryBean  负责将Bean对象注册到IoC容器中的Bean
+BeanFactory  负责从IoC容器中获取Bean对象

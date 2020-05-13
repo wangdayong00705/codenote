@@ -1,0 +1,110 @@
+使用git步骤
+1.下载与安装
+2.配置个人信息 git config --global user.email/name
+#在使用git进行版本管理之前，需要进行一个配置，这个配置就是告诉git你的用户名以及你的邮件账号
+git config --global user.email/name
+#告诉git你是谁？
+git config --global user.email "you@example.com"
+git config --global user.name "Your Name"
+3.git init 
+#对一个文件夹目录进行git初始化操作，这个初始化就是为了让git对这个文件夹中的文件进行版本管理
+4.接下来你的操作无非就是在这个工作区或者仓库创建文件，然后对文件进行一系列修改操做之类的
+
+#工作区  版本库 暂存区  提交区  的概念
+工作区就是当前叫你使用的目录 版本库就是add以及commit之后的乱七八糟的东西,版本库可以细分为暂存区和提交区
+只有进入到提交区的文件才能真正被git管理起来
+
+git status  #查看git工作区的状态(有没有修改还未提交的内容)
+
+git add  test.txt   #将新增的内容拉进git的暂存区
+git add .   #将工作区中的所有内容add到git的暂存区
+git commit -m "备注的提交信息" #将暂存区中的内容commit到git提交区
+
+
+git log #查看git的日志信息
+git log --pretty=oneline   #查看精简(一行)日志
+git reflog   #查看所有git的日志信息
+
+git reset --hard commitId  #切换到指定版本上
+git reset --hard HEAD^   #一个^代表切换到上一个版本，两个^^代表切换到上上一个版本
+
+#撤销内容
+git checkout -- file名  #撤销工作区之前的修改
+对于已经在暂存区的内容，使用git checkout -- 文件名  不能撤销了
+此时需要两步才能撤销操作：
+	1.先回退到提交区中的最新版本  git reset HEAD 文件名
+	2.再次使用 git checkout -- 文件名 即将修改拉回到工作区，把工作区的修改内容清空 
+
+
+HEAD #头指针  HEAD头指针指向的是当前分支最新的commitId
+#如果说内容已经add到暂存区，此时想要撤销的话，需要先回到最新的一个commitId上 HEAD HEAD^ HEAD^^ 
+master 分支就是主分支，也就是git为你默认创建的分支
+有主分支一定就有其他分支
+master分支指向的是最新的提交commitId，头指针指向的是我们的master分支
+
+#分支
+git checkout -b 新的分支名 #新增分支
+git checkout 分支名   #切换到指定分支
+git branch  #查看所有的分支，并且能看到当前的分支
+git branch -d 分支名  #删除分支,且必须切换到其他分支上才能操作
+git branch -D 分支名  #强制删除分支
+
+git merge dev_zhang       #合并分支内容主(master)分支上
+
+git config #配置git的命令
+git config -l #查看所有的配置信息
+优先级：仓库级别 > 全局级别 > 系统级别
+git config --local -l #查看仓库级别的配置信息
+git config --global -l #查看全局的配置信息
+git config --system -l #查看系统级别的配置信息
+git config --local -e  #编辑仓库级别的配置信息
+git config --global --add user.name XXX  #在全局配置信息里增加一个用户的姓名
+git config --global --unset user.name  #删除某一个配置信息
+
+
+#配置别名
+git config --global alias.st status #给status配置别名st  使用git st 和使用 git status效果一样
+
+#打标签
+git tag v1.0.1  #给当前最新版本打上了一个标签，标签名为v1.0.1
+git tag    #查看一下当前仓库的标签列表
+git tag v1.0.0 d619d86  #给某一个commitId打标签
+git tag v2.0.0 d619d86 -m "这里打上了一个标签"
+git tag -d v1.0.1  #删除标签
+
+#忽略文件,不让git管理
+比如 不需要git管理.class结尾的文件
+创建一个.gitignore文件，在其里面配置忽略规则，比如 *.class
+然后把.gitignore文件提交到git的提交区即可
+
+
+
+
+
+【如果没有权限的情况下,需要添加权限】
+A.需要在本地中生成一个ssh key(C:\Users\Dell目录下是否有一个 .ssh文件夹)
+ssh-keygen -t rsa -C "远程仓库地址"  （一路回车确认）在自己的计算机中增加一个安全的ssh key
+这相当于盖上了一个章，就表示你这个电脑认证后的ssh_key
+
+打开.ssh文件夹，打开.pub文件，复制里面的密钥添加到GitHub上即可()
+B.需要把这个key告诉GitHub/码云  settings -> SSH and GPG keys -> New SSH key
+
+
+git remote add origin 远程仓库地址    #将本地仓库和远程仓库进行关联
+#origin指本地仓库和远程仓库的地址进行一个关联
+
+git push -u origin master              #将本地代码推送到指定远程仓库(master只主分支)
+
+
+
+比如说新来了一个哥们  小王  需要进行开发
+需要把远程仓库的代码拉取到本地进行开发
+(1) clone 克隆操作
+前提是：sshkey 也要添加完成
+git clone 远程仓库地址  如：git@github.com:wangdayong00705/gupaogit.git
+
+如果远程仓库的版本内容和本地仓库的版本内容不一致，需要先进行 git pull 操作，把远程仓库的内容拉下来，到最新版本才行；如果有冲突，然后进行手动解决冲突
+
+
+
+
